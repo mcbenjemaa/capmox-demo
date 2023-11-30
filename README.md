@@ -46,3 +46,14 @@ in order to make argocd sync the apps of apps, we need to create the root app.
 ```shell
 kubectl apply -f root.yaml -n argocd
 ```
+
+
+### Create Workload clusters
+
+do not forget to label the cluster with:
+
+```yaml
+role: workload
+take-along-label.capi-to-argocd.role: ""
+```
+
