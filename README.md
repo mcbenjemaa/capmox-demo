@@ -1,16 +1,12 @@
 # capmox-demo
 
-
 ## Initialize the Mangement Cluster
 
 Create the cilium configmap
 
 ```shell
-make crs-cilium
-
 kubectl create configmap cilium  --from-file=data=crs/cilium.yaml
 ```
-
 
 Bootstrap a Management cluster
 ```bash
