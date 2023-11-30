@@ -126,7 +126,7 @@ spec:
       kind: ProxmoxMachineTemplate
       name: dev-control-plane
   replicas: 1
-  version: v1.27.8
+  version: v1.28.3
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
 kind: ProxmoxMachineTemplate
@@ -139,7 +139,7 @@ spec:
       format: qcow2
       full: true
       sourceNode: stg-ceph01
-      templateID: 164
+      templateID: 166
       network:
         default:
           bridge: vmbr129
@@ -169,7 +169,7 @@ spec:
         apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
         kind: ProxmoxMachineTemplate
         name: dev-worker
-      version: v1.27.8
+      version: v1.28.3
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
 kind: ProxmoxMachineTemplate
@@ -182,7 +182,7 @@ spec:
       format: qcow2
       full: true
       sourceNode: stg-ceph01
-      templateID: 164
+      templateID: 166
       network:
         default:
           bridge: vmbr129
