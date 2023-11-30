@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            role: workload
+  template:
+    metadata:
+      name: '{{name}}-cilium'
+    spec:
+      project: default
+      source:
+        repoURL: https://helm.cilium.io
+        targetRevision: 1.14.1
+        chart: cilium
+      destination:
+        name: '{{name}}'
+        namespace: kube-system
+      ignoreDifferences:
+        - group: ""
+          kind: ConfigMap
+          name: hubble-ca-cert
+          jsonPointers:
+            - /data/ca.crt
+        - group: ""
+          kind: Secret
+          name: hubble-relay-client-certs
+          jsonPointers:
+            - /data/ca.crt
+            - /data/tls.crt
+            - /data/tls.key
+        - group: ""
+          kind: Secret
+          name: hubble-server-certs
+          jsonPointers:
+            - /data/ca.crt
+            - /data/tls.crt
+            - /data/tls.key
