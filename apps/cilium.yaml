@@ -20,6 +20,10 @@ spec:
       destination:
         name: '{{name}}'
         namespace: kube-system
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
       ignoreDifferences:
         - group: ""
           kind: ConfigMap
