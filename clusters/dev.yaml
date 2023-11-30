@@ -183,9 +183,9 @@ spec:
       full: true
       sourceNode: stg-ceph01
       templateID: 164
-    network:
-      default:
-        bridge: vmbr129
+      network:
+        default:
+          bridge: vmbr129
 ---
 apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
 kind: KubeadmConfigTemplate
