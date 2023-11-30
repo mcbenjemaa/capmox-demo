@@ -17,6 +17,9 @@ spec:
         repoURL: https://helm.cilium.io
         targetRevision: 1.14.1
         chart: cilium
+        helm:
+          values: |
+            internalTrafficPolicy=local
       destination:
         name: '{{name}}'
         namespace: kube-system
