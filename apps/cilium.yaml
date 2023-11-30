@@ -19,7 +19,7 @@ spec:
         chart: cilium
         helm:
           values: |
-            internalTrafficPolicy=local
+            internalTrafficPolicy: local
             image:
               repository: "quay.io/cilium/cilium"
               tag: "v1.14.1"
