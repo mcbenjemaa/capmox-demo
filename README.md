@@ -1,5 +1,11 @@
 # capmox-demo
 
+## Overview
+
+This repository contains a demo of capmox, which is a combination of capi and argocd.
+
+![Overview](assets/capi-demo.jpg)
+
 ## Initialize the Mangement Cluster
 
 Create the cilium configmap
