@@ -10,6 +10,7 @@ fi
 # Variables
 NAMESPACE=${NAMESPACE:-default}
 CLUSTERCTL_CONFIG=${CLUSTERCTL_CONFIG:-~/.cluster-api/clusterctl.yaml}
+KUBERNETES_VERSION=${KUBERNETES_VERSION:-"v1.27.8"}
 CONTROL_PLANE_MACHINE_COUNT=${CONTROL_PLANE_MACHINE_COUNT:-1}
 WORKER_MACHINE_COUNT=${WORKER_MACHINE_COUNT:-1}
 FLAVOR=${FLAVOR:-}
@@ -85,6 +86,7 @@ generate() {
     --infrastructure proxmox \
     --control-plane-machine-count "${CONTROL_PLANE_MACHINE_COUNT}" \
     --worker-machine-count "${WORKER_MACHINE_COUNT}" \
+    --kubernetes-version "${KUBERNETES_VERSION}" \
     --flavor "${FLAVOR}" \
     --config "${CLUSTERCTL_CONFIG}" > "${CLUSTER_MANIFEST}"
 }

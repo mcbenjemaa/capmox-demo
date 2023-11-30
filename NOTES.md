@@ -1,5 +1,6 @@
 # Notes
 * Bootstrap a Management Cluster (label role=mgmt) ()
+  * Show how to build template
   * quick intro CRS ()
 * Install Argocd. ()
 * Register clusters automatically to argocd with https://github.com/dntosas/capi2argo-cluster-operator ()
