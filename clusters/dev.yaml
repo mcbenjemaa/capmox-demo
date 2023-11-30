@@ -34,13 +34,13 @@ spec:
     - stg-ceph04
     - stg-ceph05
   controlPlaneEndpoint:
-    host: 10.4.18.131
+    host: 10.4.18.145
     port: 6443
   dnsServers:
     - 10.4.1.1
   ipv4Config:
     addresses:
-      - 10.4.18.133-10.4.18.150
+      - 10.4.18.146-10.4.18.180
     gateway: 10.4.18.129
     prefix: 25
 ---
@@ -69,7 +69,7 @@ spec:
               - name: vip_interface
                 value: ""
               - name: address
-                value: 10.4.18.131
+                value: 10.4.18.145
               - name: port
                 value: "6443"
               - name: vip_arp
