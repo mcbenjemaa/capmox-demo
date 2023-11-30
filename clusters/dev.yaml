@@ -3,6 +3,10 @@ kind: Cluster
 metadata:
   name: dev
   namespace: default
+  labels:
+    cluster.x-k8s.io/cluster-name: dev
+    role: workload
+    take-along-label.capi-to-argocd.role: ""
 spec:
   clusterNetwork:
     pods:
