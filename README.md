@@ -16,13 +16,13 @@ kubectl create configmap cilium  --from-file=data=crs/cilium.yaml
 
 Bootstrap a Management cluster
 ```bash
-FLAVOR=cilium FLAVOR=cilium ./scripts/bootsrap-cluster.sh infra-dns
+FLAVOR=cilium FLAVOR=cilium ./scripts/bootsrap-cluster.sh infra
 ```
 
 Wait until the script finished, then you can check the status of the cluster.
-the kubeconfig will be stored at ~/.kube/infra-dns.kubeconfig
+the kubeconfig will be stored at ~/.kube/infra.kubeconfig
 ```bash
-kubectl --kubectl ~/.kube/infra-dns.kubeconfig get nodes
+kubectl --kubectl ~/.kube/infra.kubeconfig get nodes
 ```
 
 The created cluster will become the management cluster. 
