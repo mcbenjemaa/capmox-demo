@@ -17,18 +17,6 @@ spec:
         repoURL: https://helm.cilium.io
         targetRevision: 1.14.1
         chart: cilium
-        helm:
-          values: |
-            internalTrafficPolicy: local
-            image:
-              repository: "quay.io/cilium/cilium"
-              tag: "v1.14.1"
-              useDigest: false
-            operator:
-              image:
-                repository: "quay.io/cilium/operator"
-                tag: "v1.14.1"
-                useDigest: false
       destination:
         name: '{{name}}'
         namespace: kube-system
