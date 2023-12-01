@@ -30,6 +30,8 @@ CLUSTER_NAME=$1
 TARGET_KUBECONFIG=$(mktemp)
 CLUSTER_MANIFEST=$(mktemp)
 
+OUT=$(mktemp -d)
+
 main() {
   echo "Initializing cluster"
   init
@@ -39,6 +41,7 @@ main() {
 
   echo "Bootstrapping cluster"
   bootstrap_cluster
+  wait
   echo "Cluster ${CLUSTER_NAME} is ready"
 
   get_kubeconfig
@@ -49,21 +52,23 @@ main() {
 
 bootstrap_cluster() {
   # skip if cluster already exists
-   kubectl --namespace "${NAMESPACE}" get cluster "${CLUSTER_NAME}" &> /dev/null && return
+  kubectl --namespace "${NAMESPACE}" get cluster "${CLUSTER_NAME}" &> /dev/null && return
 
   # create a cluster
   kubectl --namespace "${NAMESPACE}" apply -f "${CLUSTER_MANIFEST}"
+}
 
-  echo "Waiting for cluster to be ready"
-  # wait for cluster to be ready
-  kubectl --namespace "${NAMESPACE}" wait --for=condition=Ready cluster/"${CLUSTER_NAME}" --timeout=30m
+wait() {
+    echo "Waiting for cluster to be ready"
+    # wait for cluster to be ready
+    kubectl --namespace "${NAMESPACE}" wait --for=condition=Ready cluster/"${CLUSTER_NAME}" --timeout=30m
 
-  # wait for machines to be ready
-  kubectl --namespace "${NAMESPACE}" wait --for=condition=Ready machine -l cluster.x-k8s.io/cluster-name="${CLUSTER_NAME}" --timeout=30m
+    # wait for machines to be ready
+    kubectl --namespace "${NAMESPACE}" wait --for=condition=Ready machine -l cluster.x-k8s.io/cluster-name="${CLUSTER_NAME}" --timeout=30m
 
-  # label the cluster
-  kubectl --namespace "${NAMESPACE}" label cluster "${CLUSTER_NAME}" role="management"
-  kubectl --namespace "${NAMESPACE}" label cluster "${CLUSTER_NAME}" take-along-label.capi-to-argocd.role=""
+    # label the cluster
+    kubectl --namespace "${NAMESPACE}" label cluster "${CLUSTER_NAME}" role="management"
+    kubectl --namespace "${NAMESPACE}" label cluster "${CLUSTER_NAME}" take-along-label.capi-to-argocd.role=""
 }
 
 init() {
@@ -110,7 +115,10 @@ move() {
   unset KUBECONFIG
 
   echo "execute clusterctl move"
-  clusterctl move --v=8 --to-kubeconfig "${TARGET_KUBECONFIG}" --namespace "${NAMESPACE}" --config "${CLUSTERCTL_CONFIG}"
+  clusterctl move --v=8 --to-directory "${OUT}" --namespace "${NAMESPACE}" --config "${CLUSTERCTL_CONFIG}"
+  export KUBECONFIG=${TARGET_KUBECONFIG}
+  clusterctl move --v=8 --from-directory "${OUT}" --namespace "${NAMESPACE}" --config "${CLUSTERCTL_CONFIG}"
+  unset KUBECONFIG
 
   unannotate_resources
   echo "unannotate resources to unpause them"
