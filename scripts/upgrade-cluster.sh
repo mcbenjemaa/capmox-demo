@@ -33,6 +33,9 @@ main() {
 
 
 upgrade() {
+   # pause the cluster
+   kubectl --namespace "${NAMESPACE}" patch cluster "${CLUSTER_NAME}" -p '{"spec": {"paused": true}}' --type merge
+
    # get the KubeadmControlPlane
    KCP=$(kubectl --namespace "${NAMESPACE}" get KubeadmControlPlane -l cluster.x-k8s.io/cluster-name="${CLUSTER_NAME}" -o jsonpath='{.items[0].metadata.name}')
 
@@ -62,6 +65,8 @@ upgrade() {
     kubectl --namespace "${NAMESPACE}" patch MachineDeployment "${MACHINE}" -p '{"spec": {"template": {"spec": {"version": "'"${KUBERNETES_VERSION}"'" }}}}' --type merge
   done
 
+  # unpause the cluster
+  kubectl --namespace "${NAMESPACE}" patch cluster "${CLUSTER_NAME}" -p '{"spec": {"paused": false}}' --type merge
 }
 
 main
